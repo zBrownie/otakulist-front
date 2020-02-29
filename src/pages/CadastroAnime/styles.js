@@ -27,6 +27,9 @@ export const Container = styled.div `
         padding: 10px;
     }
 
+        label{
+            margin: 6px 0;
+        }
       input,textarea,button, .selecte{
           margin: 10px 0;
       }

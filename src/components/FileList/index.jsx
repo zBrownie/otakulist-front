@@ -5,19 +5,19 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 
 import { MdCheckCircle, MdError, MdLink } from 'react-icons/md'
 
-export default function FileList({ file }) {
+export default function FileList({ file,onDelete }) {
 
 
     return (
         <Container>
-            <li key={file.id}>
+            <li>
                 <FileInfo>
-                    <Preview src={file.preview} />
+                    {/* <Preview src={file.preview} /> */}
                     <div>
                         <strong>{file.name}</strong>
                         <span>{file.readableSize}
                             {
-                                !!file.url && <button onClick={() => { }}>Excluir</button>
+                                !!file.url && <button onClick={() => onDelete(file.id)}>Excluir</button>
                             }
                         </span>
 

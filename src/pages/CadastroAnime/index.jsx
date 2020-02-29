@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
+import api from '../../service/api'
 import { uniqueId } from 'lodash'
 import filesize from 'filesize'
+
+
+
 import { Container } from './styles';
 import { Form } from '@unform/web'
 import Input from '../../components/Form/input'
@@ -9,18 +14,14 @@ import SelectUnform from '../../components/Form/select'
 import Upload from '../../components/Upload'
 import FileList from '../../components/FileList'
 
-import api from '../../service/api'
+
+
 
 export default function CadastroAnime() {
 
-    const handleSubmit = data => {
-
-        let data2 = { ...data, dia: handleDay(data.pos), img_url: '' }
-
-        hanldeProcessUpload(uploaded, data2)
-
-        console.log(data2)
-    }
+    const [uploaded, setuploaded] = useState({});
+    const [loading, setloading] = useState(false);
+    const history = useHistory()
 
     const handleDay = date => {
         switch (date) {
@@ -58,7 +59,7 @@ export default function CadastroAnime() {
         { value: 0, label: 'Domingo' }
     ]
 
-    const [uploaded, setuploaded] = useState({});
+
 
     function handleUpload(files) {
 
@@ -73,89 +74,80 @@ export default function CadastroAnime() {
             error: false,
             url: null,
         }
+        console.log(files)
         setuploaded(uploadedFile)
-
-
-        // const uploadedFile = files.map(file => ({
-        //     file,
-        //     id: uniqueId(),
-        //     name: file.name,
-        //     readableSize: filesize(file.size),
-        //     preview: URL.createObjectURL(file),
-        //     progress: 0,
-        //     uploaded: false,
-        //     error: false,
-        //     url: null,
-        // }))
-
-        // setuploaded(uploadedFile)
-
-        // uploadedFile.forEach(hanldeProcessUpload)
+        hanldeProcessUpload(uploadedFile)
     }
 
-    async function hanldeProcessUpload(file, animeinfo) {
+    function hanldeProcessUpload(file) {
         const data = new FormData()
         data.append('file', file.file, file.name)
-        data.append(animeinfo)
-        
-        const resp = await api.post('/animes', data, {
+
+        api.post('/images', data, {
             onUploadProgress: e => {
                 let progress = parseInt(Math.round((e.loaded * 100) / e.total))
 
                 setuploaded({ ...uploaded, progress })
-                // handleUploadedState(file.id, {
-                //     progress
-                // })
+
                 console.log(progress)
             }
         })
-        console.log(resp)
-        setuploaded({ ...uploaded, uploaded: true, id: resp.data._id, url: resp.data.url })
-        // .then(
-        //     response => {
+            .then(
+                response => {
 
-        //         setuploaded({ ...uploaded, uploaded: true, id: response.data._id, url: response.data.url })
-        //         // handleUploadedState(file.id, {
-        //         //     uploaded: true,
-        //         //     id: response.data._id,
-        //         //     url: response.data.url
-        //         // })
-        //         console.log(response.data)
+                    setuploaded({ ...uploaded, uploaded: true, id: response.data._id, url: response.data.url })
 
-        //     }
-        // ).catch(error => {
 
-        //     setuploaded({ ...uploaded, error: true })
-        //     // handleUploadedState(file.id, {
-        //     //     error: true
-        //     // })
-        // })
+                }
+            ).catch(error => {
+
+                setuploaded({ ...uploaded, error: true })
+
+            })
 
 
     }
 
-    function handleUploadedState(id, data) {
+    const handleSubmit = async data => {
+        try {
+            if (uploaded.url) {
 
-        let arrayTemp = Array.from(uploaded)
+                let animedata = { ...data, dia: handleDay(data.pos), img_url: uploaded.url }
+                console.log(animedata)
+                await api.post('/animes', animedata).then(
+                    response => {
+                        history.push('/lista')
+                    }
+                ).catch(error => {
+                    console.log("ERRO CADASTRAR ANIME", error)
+                })
+            } else {
+                console.log("Gerando Link, Tente denovo...")
+            }
+        } catch (err) {
+            console.log("Erro upload", err)
+        }
 
-        arrayTemp.map(file => {
-            return file.id === id ? { ...file, ...data } : file
-        })
-        setuploaded(arrayTemp)
+
+
+
+    }
+
+    async function handleDelete(id) {
+        await api.delete(`/images/${id}`)
+
+        setuploaded({})
     }
 
     return (
         <Container>
-            {console.log(uploaded)}
-            {/* <div>
-                <Upload onUpload={handleUpload} />
-                <FileList files={uploaded} />
-            </div> */}
+            {console.log(uploaded.url)}
+
             <Form onSubmit={handleSubmit} encType="multipart/form-data">
                 <h1>Cadastro</h1>
                 <Upload name="img_url" className="uploadinput" onUpload={handleUpload} />
                 {
-                    !!uploaded.length && <FileList file={uploaded} />
+                    !!Object.entries(uploaded).length && <FileList file={uploaded} onDelete={handleDelete} />
                 }
                 <label htmlFor="title">Titulo</label>
                 <Input name="title" type="text" />
@@ -172,10 +164,11 @@ export default function CadastroAnime() {
                 <label htmlFor="streaming">Passando</label>
                 <SelectUnform name="streaming" options={optionsStreaming} className="selecte" />
 
-                <label htmlFor="descricao">Sinopse</label>
-                <TextAreaUnform name="descricao"></TextAreaUnform>
+                <label htmlFor="desc">Sinopse</label>
+                <TextAreaUnform name="desc"></TextAreaUnform>
 
-                <button type="submit">OK</button>
+                <button type="submit" disabled={!uploaded.url}>
+                    OK</button>
             </Form>
         </Container>
     );
