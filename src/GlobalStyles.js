@@ -12,7 +12,7 @@ const GlobalStyles = createGlobalStyle `
   }
 
 
-  body,input,button{
+  *,body,input,button{
     font-family:"Roboto",Arial, Helvetica, sans-serif;
     
   }

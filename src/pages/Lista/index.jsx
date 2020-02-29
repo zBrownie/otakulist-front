@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../service/api'
-import { Container } from './styles';
+import { Container, PosterAnime } from './styles';
 
 
 export default function Lista() {
@@ -24,8 +24,7 @@ export default function Lista() {
             <ul>
                 {
                     listAnimes.map(anime => <li key={anime._id}>
-                        <img src={anime.img_url} alt={anime.title} />
-                        <h2>{anime.title}</h2>
+                        <PosterAnime src={anime.img_url} onClick={()=>{console.log(anime._id)}}/>
                     </li>)
                 }
             </ul>

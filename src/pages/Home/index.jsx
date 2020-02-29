@@ -1,12 +1,12 @@
 import React from 'react';
 
-// import { Container } from './styles';
-import CadastroAnime from '../CadastroAnime'
+import { Container } from './styles';
+import AnimesDia from '../../components/Animes_Dia'
 
 export default function Home() {
   return (
-    <div>
-        <CadastroAnime />
-    </div>
+    <Container>
+      <AnimesDia />
+    </Container>
   );
 }

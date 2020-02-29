@@ -1,9 +1,12 @@
 import React from 'react';
-
-// import { Container } from './styles';
+import { Link } from 'react-router-dom'
+import { Container } from './styles';
 
 export default function Header() {
   return (
-    <div />
+    <Container>
+      <Link to="/">Otaku List</Link>
+      <Link to="/cadastro">Cadastrar</Link>
+    </Container>
   );
 }
