@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import CadastroAnime from './pages/CadastroAnime'
 import Lista from './pages/Lista'
 import Footer from './components/Footer'
+import Login from './pages/Login'
 
 const routes = () => <Router>
     <Header />
@@ -15,6 +16,7 @@ const routes = () => <Router>
         <Route exact path="/" component={Home} />
         <Route exact path="/cadastro" component={CadastroAnime} />
         <Route exact path="/lista" component={Lista} />
+        <Route exact path="/login" component={Login} />
     </Switch>
     <Footer/>
 </Router>
