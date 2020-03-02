@@ -37,15 +37,19 @@ export default function AnimesShow({ title, data, show = false }) {
   return (
     <Container>
       <h1>{title}</h1>
-      <ul>
-        {data.map(anime => (
-          <li key={anime._id}>
-            <PosterAnime src={anime.img_url} onClick={() => openModal(anime)}>
-              {!!show && <span>{anime.dia}</span>}
-            </PosterAnime>
-          </li>
-        ))}
-      </ul>
+      {data.length > 0 ? (
+        <ul>
+          {data.map(anime => (
+            <li key={anime._id}>
+              <PosterAnime src={anime.img_url} onClick={() => openModal(anime)}>
+                {!!show && <span>{anime.dia}</span>}
+              </PosterAnime>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Sem anime</p>
+      )}
     </Container>
   );
 }

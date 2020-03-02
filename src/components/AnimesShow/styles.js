@@ -10,11 +10,19 @@ export const Container = styled.div `
     margin-top: 40px;
   }
 
+  p{
+    text-align:center;
+    margin: 10px 0;
+    font-size:18px;
+    font-weight:bold;
+  }
+
  ul{
     display:grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       align-items:center;
       margin:10px auto;
+      
  }
 
  

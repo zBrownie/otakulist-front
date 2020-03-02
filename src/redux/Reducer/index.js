@@ -1,7 +1,7 @@
 const initState = {
-  userdata: "",
-  animes: "",
-  season: ""
+  userdata: {},
+  animes: [],
+  season: []
 };
 
 const reducer = (state = initState, action) => {
