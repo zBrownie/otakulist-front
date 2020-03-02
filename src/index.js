@@ -4,16 +4,13 @@ import App from "./App";
 import { ModalProvider } from "react-modal-hook";
 
 import { Provider } from "react-redux";
-import { store, persistor } from "./redux/Store";
-import { PersistGate } from "redux-persist/integration/react";
+import { store } from "./redux/Store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <ModalProvider>
-        <App />
-      </ModalProvider>
-    </PersistGate>
+    <ModalProvider>
+      <App />
+    </ModalProvider>
   </Provider>,
   document.getElementById("root")
 );
