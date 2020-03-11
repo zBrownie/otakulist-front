@@ -16,7 +16,13 @@ const modalStyles = {
   }
 };
 
-export default function AnimesShow({ title, data, show = false }) {
+export default function AnimesShow({
+  title,
+  data,
+  show = false,
+  admin = false,
+  lista = false
+}) {
   const [selectedAnime, setselectedAnime] = useState({});
 
   const [showModal, hideModal] = useModal(
@@ -41,8 +47,15 @@ export default function AnimesShow({ title, data, show = false }) {
         <ul>
           {data.map(anime => (
             <li key={anime._id}>
+              {!!admin && (
+                <div className="admin">
+                  <button>Editar</button>
+                  <button>Deletar</button>
+                </div>
+              )}
               <PosterAnime src={anime.img_url} onClick={() => openModal(anime)}>
                 {!!show && <span>{anime.dia}</span>}
+                {!!lista && <span>{anime.streaming ? 'Passando': "Hiato"}</span>}
               </PosterAnime>
             </li>
           ))}

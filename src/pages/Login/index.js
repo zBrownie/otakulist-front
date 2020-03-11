@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Container } from "./styles";
 import { Form } from "@unform/web";
 import Input from "../../components/Form/input";
 import { handleGetUser, handleGetToken } from "../../redux/Actions";
 import api from "../../service/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const token = useSelector(state => state.token);
 
   const handleSubmit = async data => {
     await api
@@ -21,6 +24,15 @@ export default function Login() {
         console.log("ERRO LOGIN", error);
       });
   };
+
+  useEffect(() => {
+    function handleUserOnline() {
+      if (token) {
+        history.push("/profile");
+      }
+    }
+    handleUserOnline();
+  }, [token, history]);
 
   return (
     <Container>

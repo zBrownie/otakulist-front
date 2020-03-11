@@ -30,6 +30,19 @@ export const Container = styled.div`
     list-style: none;
   }
 
+  li .admin{
+    display:flex;
+    flex-direction:row;
+    button{
+      margin-left:8px;
+      color:#23231f;
+      font-weight:500;
+      background:#cccccc99;
+      padding: 8px 16px;
+      border:0;
+    }
+  }
+
   @media (max-width: 850px) {
     ul {
       grid-template-columns: 1fr 1fr 1fr;
@@ -80,4 +93,6 @@ export const PosterAnime = styled.div`
       -1px 0px 0px #fff, 1px 0px 0px #fff, -1px 1px 0px #fff, 0px 1px 0px #fff,
       1px 1px 0px #fff;
   }
+
+  
 `;

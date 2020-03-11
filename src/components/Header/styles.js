@@ -14,5 +14,6 @@ export const Container = styled.div `
   font-size:18px;
   color:#fff;
   text-decoration:none;
+  margin-right:6px;
   }
 `;

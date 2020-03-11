@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from "react";
-import api from "../../service/api";
+import React, { useEffect } from "react";
 import { Container } from "./styles";
 import AnimesShow from "../../components/AnimesShow";
 import { useSelector } from "react-redux";
 
 export default function Lista() {
-  // const [animes, setanimes] = useState([]);
-  // useEffect(() => {
-  //   async function handleAllAnimes() {
-  //     await api.get("/animes").then(response => {
-  //       setanimes(response.data);
-  //     });
-  //   }
-  //   handleAllAnimes()
-  // }, []);
-
   const animes = useSelector(state => state.animes);
+  const user = useSelector(state => state.userdata);
+
   return (
     <Container>
-      <AnimesShow data={animes} title={""} />
+      <AnimesShow data={animes} title={""} admin={user.admin} lista/>
     </Container>
   );
 }
