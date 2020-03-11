@@ -1,7 +1,8 @@
 const initState = {
   userdata: {},
   animes: [],
-  season: []
+  season: [],
+  token: ""
 };
 
 const reducer = (state = initState, action) => {
@@ -12,6 +13,8 @@ const reducer = (state = initState, action) => {
       return { ...state, season: action.payload };
     case "GET_USER":
       return { ...state, userdata: action.payload };
+    case "GET_TOKEN":
+      return { ...state, token: action.payload };
     default:
       return state;
   }

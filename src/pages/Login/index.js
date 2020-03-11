@@ -3,20 +3,25 @@ import React from "react";
 import { Container } from "./styles";
 import { Form } from "@unform/web";
 import Input from "../../components/Form/input";
-
+import { handleGetUser, handleGetToken } from "../../redux/Actions";
 import api from "../../service/api";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
+
+  const dispatch = useDispatch()
+
   const handleSubmit = async data => {
-    api
-      .get("/users")
+    await api
+      .post("/auth", data)
       .then(response => {
-        console.log(response.data);
+        dispatch(handleGetUser(response.data.user))
+        dispatch(handleGetToken(response.data.token))
       })
       .catch(error => {
         console.log("ERRO LOGIN", error);
       });
-  };
+       };
 
   return (
     <Container>

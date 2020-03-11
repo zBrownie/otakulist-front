@@ -12,10 +12,16 @@ export const handleGetSeason = newSeason => {
     };
   };
 
-
-  export const handleGetUser = newUser => {
-    return {
-      type: "GET_USER",
-      payload: newUser
-    };
+export const handleGetUser = newUser => {
+  return {
+    type: "GET_USER",
+    payload: newUser
   };
+};
+
+export const handleGetToken = newToken => {
+  return {
+    type: "GET_TOKEN",
+    payload: newToken
+  };
+};
