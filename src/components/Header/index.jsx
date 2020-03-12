@@ -16,6 +16,7 @@ export default function Header() {
     <Container>
       <Link to="/">Otaku List</Link>
       <div>
+        <Link to="/lista">Lista</Link>
         {Object.entries(user).length === 0 ? (
           <Link to="/login">Login</Link>
         ) : (
