@@ -14,4 +14,7 @@
  
 
 
-[Otaku List](https://otakulist.herokuapp.com/)
+Site: [Otaku List](https://otakulist.herokuapp.com/)
+
+
+### Em Desenvolvimento
