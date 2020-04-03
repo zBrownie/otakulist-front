@@ -16,5 +16,7 @@
 
 Site: [Otaku List](https://otakulist.herokuapp.com/)
 
+Back-end: [API](https://github.com/zBrownie/otakulist-api)
 
-### Em Desenvolvimento
+
+
